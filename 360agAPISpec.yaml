@@ -145,11 +145,9 @@ components:
           description: Array of client crop IDs.
           items:
             type: integer
-          example: [42, 45]
         crop_id:
           type: integer
           description: Single client crop ID (alternative to crop_ids array).
-          example: 42
         date:
           type: string
           format: date
@@ -157,7 +155,6 @@ components:
         mapp_number:
           type: integer
           description: Optional MAPP number to filter results down to a specific product.
-          example: 19234
 
     ProductsByCrop:
       type: object
@@ -176,14 +173,6 @@ components:
           type: array
           items:
             type: string
-      example:
-        mapp_number: "19234"
-        name: "AgriGuard Pro"
-        final_sale_distributor: "2031-06-30"
-        final_use: "2032-06-30"
-        active_ingredients:
-          - "Azoxystrobin"
-          - "Epoxiconazole"
 
     DetailedProduct:
       type: object
@@ -254,95 +243,6 @@ components:
         specific_restriction_statements:
           type: string
           nullable: true
-      example:
-        MAPP_number: "19234"
-        Product_name: "AgriGuard Pro"
-        extent_of_authorisation: "Great Britain"
-        marketing_company: "CropTech Solutions"
-        formulation: "Suspension Concentrate"
-        first_issue_date: "2024-01-15"
-        expiry_date: "2030-12-31"
-        final_sale_distribution: "2031-06-30"
-        final_use: "2032-06-30"
-        field_of_use: "Agriculture"
-        product_application_units: "L/ha"
-        crop_qualifier_restrictions:
-          - client_crop_id: 42
-            product_crop_qualifier: "Winter Wheat"
-            product_max_total_dose: 2.0
-            product_max_total_dose_period: null
-            product_max_treatments: 2
-            product_max_treatments_period: null
-            product_app_interval: 14
-            product_harvest_interval: 35
-            product_max_concentration_percent: null
-            product_min_water_rate_l-ha: 200
-            product_exclusive_timed_restrictions: false
-            product_timed_restriction_details:
-              - product_earliest_date: null
-                product_earliest_growth_stage: "GS31"
-                product_latest_date: null
-                product_latest_growth_stage: "GS59"
-                product_timed_max_application_rate: 1.0
-                product_timed_max_total_dose: 2.0
-                product_timed_max_treatments: 2
-        adjuvant_crop_restrictions:
-          - client_crop_id: 42
-            restrictions:
-              - product_crop_qualifier: "Winter Wheat"
-                ppp_descriptor: "Tank Mix Partner A"
-                ppp_name_mapp: "Partner MAPP 98765"
-                ppp_adjuvant_rec: "Use with approved adjuvant"
-                max_ppp_rate: 1.5
-                product_max_concentration_percent: null
-                product_max_treatments: 1
-                product_max_treatments_period: null
-                product_max_treatments_inherited: true
-                product_earliest_application: "GS30"
-                product_latest_application: "GS59"
-                product_latest_application_inherited: false
-                product_harvest_interval: 35
-                ppp_active: "Adjuvant Active X"
-        product_active:
-          - active_name: "Azoxystrobin"
-            active_quantity: 250
-            active_quantity_units: "g/L"
-            active_crop_qualifier_restrictions:
-              - client_crop_id: 42
-                active_crop_qualifier: "Winter Wheat"
-                active_max_total_dose: 500
-                active_max_total_dose_period: null
-                active_max_treatments: 2
-                active_max_treatments_period: null
-                active_app_interval: 14
-                active_harvest_interval: 35
-                active_max_concentration_percent: null
-                active_min_water_rate_l-ha: 200
-                active_timed_restriction_details:
-                  - active_earliest_date: null
-                    active_latest_date: null
-                    active_timed_max_application_rate: 250
-        active_group:
-          - client_crop_id: 42
-            active_group_name: "QoI Fungicides"
-            active_group_max_treatments: 2
-            active_group_max_treatments_period: null
-            active_group_app_interval: 14
-        arthropod_buffer:
-          - client_crop_id: 42
-            arthropod_crop_qualifier: "Winter Wheat"
-            buffer_width: 5
-        aquatic_buffer:
-          - client_crop_id: 42
-            aquatic_crop_qualifier: "Winter Wheat"
-            hbs_buffer_width: 5
-            baas_buffer_width: 5
-            handheld_buffer_width: 1
-        LERAP_eligible: true
-        low_drift_nozzle: "3 Star"
-        operator_protection_statements: "Wear suitable protective clothing."
-        environmental_protection_statements: "Do not contaminate water."
-        specific_restriction_statements: "Do not apply by hand-held equipment."
 
     CropQualifierRestriction:
       type: object
@@ -433,31 +333,22 @@ components:
           type: number
         product_max_concentration_percent:
           type: number
-          nullable: true
         product_max_treatments:
           type: integer
-          nullable: true
         product_max_treatments_period:
           type: integer
-          nullable: true
         product_max_treatments_inherited:
           type: boolean
-          nullable: true
         product_earliest_application:
           type: string
-          nullable: true
         product_latest_application:
           type: string
-          nullable: true
         product_latest_application_inherited:
           type: boolean
-          nullable: true
         product_harvest_interval:
           type: integer
-          nullable: true
         ppp_active:
           type: string
-          nullable: true
 
     ProductActive:
       type: object
@@ -561,8 +452,6 @@ components:
         hbs_buffer_width:
           type: integer
         baas_buffer_width:
-          type: integer
-        handheld_buffer_width:
           type: integer
         handheld_buffer_width:
           type: integer
