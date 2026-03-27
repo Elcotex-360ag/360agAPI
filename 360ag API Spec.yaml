@@ -1,0 +1,457 @@
+openapi: 3.0.3
+info:
+  title: 360ag CP Authorisations API
+  version: 1.0.0
+  description: API for retrieving crop protection and adjuvant authorisations, restrictions, and mapping data.
+servers:
+  - url: https://api.360ag.io/functions/v1
+    description: Production Server
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /get_crops:
+    get:
+      summary: Retrieve available crops
+      description: Returns a list of all crops mapped to the authenticated client's catalogue.
+      operationId: getCrops
+      responses:
+        '200':
+          description: Successful response containing an array of available crops.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Crop'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /products_by_crop:
+    post:
+      summary: Get lightweight product list by crop
+      description: Returns a simplified list of approved products for the specified crop(s) and date.
+      operationId: getProductsByCrop
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequestPayload'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductsByCrop'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /product_restrictions_by_crop:
+    post:
+      summary: Get detailed product restrictions by crop
+      description: Returns the full, detailed hierarchy of restrictions, buffers, and active ingredients (including Adjuvants) for the specified crop(s).
+      operationId: getProductRestrictionsByCrop
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequestPayload'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DetailedProduct'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+
+  responses:
+    BadRequestError:
+      description: Bad Request (e.g., missing parameters)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnauthorizedError:
+      description: Unauthorized (Invalid or missing API key)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "At least one crop_id and a date are required"
+
+    Crop:
+      type: object
+      properties:
+        crop_id:
+          type: integer
+          example: 42
+        client_crop_name:
+          type: string
+          example: "Winter Wheat"
+
+    ProductRequestPayload:
+      type: object
+      required:
+        - date
+      properties:
+        crop_ids:
+          type: array
+          description: Array of client crop IDs.
+          items:
+            type: integer
+        crop_id:
+          type: integer
+          description: Single client crop ID (alternative to crop_ids array).
+        date:
+          type: string
+          format: date
+          example: "2024-05-15"
+        mapp_number:
+          type: integer
+          description: Optional MAPP number to filter results down to a specific product.
+
+    ProductsByCrop:
+      type: object
+      properties:
+        mapp_number:
+          type: string
+        name:
+          type: string
+        final_sale_distributor:
+          type: string
+          nullable: true
+        final_use:
+          type: string
+          nullable: true
+        active_ingredients:
+          type: array
+          items:
+            type: string
+
+    DetailedProduct:
+      type: object
+      properties:
+        MAPP_number:
+          type: string
+        Product_name:
+          type: string
+        extent_of_authorisation:
+          type: string
+        marketing_company:
+          type: string
+        formulation:
+          type: string
+        first_issue_date:
+          type: string
+          format: date
+        expiry_date:
+          type: string
+          nullable: true
+        final_sale_distribution:
+          type: string
+          nullable: true
+        final_use:
+          type: string
+          nullable: true
+        field_of_use:
+          type: string
+        product_application_units:
+          type: string
+          nullable: true
+        crop_qualifier_restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CropQualifierRestriction'
+        adjuvant_crop_restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdjuvantCropRestrictionGroup'
+        product_active:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductActive'
+        active_group:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveGroupRestriction'
+        arthropod_buffer:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArthropodBuffer'
+        aquatic_buffer:
+          type: array
+          items:
+            $ref: '#/components/schemas/AquaticBuffer'
+        LERAP_eligible:
+          type: boolean
+          nullable: true
+        low_drift_nozzle:
+          type: string
+          nullable: true
+        operator_protection_statements:
+          type: string
+          nullable: true
+        environmental_protection_statements:
+          type: string
+          nullable: true
+        specific_restriction_statements:
+          type: string
+          nullable: true
+
+    CropQualifierRestriction:
+      type: object
+      properties:
+        client_crop_id:
+          type: integer
+        product_crop_qualifier:
+          type: string
+        product_max_total_dose:
+          type: number
+          nullable: true
+        product_max_total_dose_period:
+          type: integer
+          nullable: true
+        product_max_treatments:
+          type: integer
+          nullable: true
+        product_max_treatments_period:
+          type: integer
+          nullable: true
+        product_app_interval:
+          type: integer
+          nullable: true
+        product_harvest_interval:
+          type: integer
+          nullable: true
+        product_max_concentration_percent:
+          type: number
+          nullable: true
+        'product_min_water_rate_l-ha':
+          type: number
+          nullable: true
+        product_exclusive_timed_restrictions:
+          type: boolean
+          nullable: true
+        product_timed_restriction_details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductTimedRestriction'
+
+    ProductTimedRestriction:
+      type: object
+      properties:
+        product_earliest_date:
+          type: string
+          nullable: true
+        product_earliest_growth_stage:
+          type: string
+          nullable: true
+        product_latest_date:
+          type: string
+          nullable: true
+        product_latest_growth_stage:
+          type: string
+          nullable: true
+        product_timed_max_application_rate:
+          type: number
+          nullable: true
+        product_timed_max_total_dose:
+          type: number
+          nullable: true
+        product_timed_max_treatments:
+          type: integer
+          nullable: true
+
+    AdjuvantCropRestrictionGroup:
+      type: object
+      properties:
+        client_crop_id:
+          type: integer
+        restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdjuvantRestriction'
+
+    AdjuvantRestriction:
+      type: object
+      properties:
+        product_crop_qualifier:
+          type: string
+        ppp_descriptor:
+          type: string
+        ppp_name_mapp:
+          type: string
+        ppp_adjuvant_rec:
+          type: string
+        max_ppp_rate:
+          type: number
+        product_max_concentration_percent:
+          type: number
+        product_max_treatments:
+          type: integer
+        product_max_treatments_period:
+          type: integer
+        product_max_treatments_inherited:
+          type: boolean
+        product_earliest_application:
+          type: string
+        product_latest_application:
+          type: string
+        product_latest_application_inherited:
+          type: boolean
+        product_harvest_interval:
+          type: integer
+        ppp_active:
+          type: string
+
+    ProductActive:
+      type: object
+      properties:
+        active_name:
+          type: string
+        active_quantity:
+          type: number
+          nullable: true
+        active_quantity_units:
+          type: string
+          nullable: true
+        active_crop_qualifier_restrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveCropQualifierRestriction'
+
+    ActiveCropQualifierRestriction:
+      type: object
+      properties:
+        client_crop_id:
+          type: integer
+        active_crop_qualifier:
+          type: string
+        active_max_total_dose:
+          type: number
+          nullable: true
+        active_max_total_dose_period:
+          type: integer
+          nullable: true
+        active_max_treatments:
+          type: integer
+          nullable: true
+        active_max_treatments_period:
+          type: integer
+          nullable: true
+        active_app_interval:
+          type: integer
+          nullable: true
+        active_harvest_interval:
+          type: integer
+          nullable: true
+        active_max_concentration_percent:
+          type: number
+          nullable: true
+        'active_min_water_rate_l-ha':
+          type: number
+          nullable: true
+        active_timed_restriction_details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveTimedRestriction'
+
+    ActiveTimedRestriction:
+      type: object
+      properties:
+        active_earliest_date:
+          type: string
+          nullable: true
+        active_latest_date:
+          type: string
+          nullable: true
+        active_timed_max_application_rate:
+          type: number
+          nullable: true
+
+    ActiveGroupRestriction:
+      type: object
+      properties:
+        client_crop_id:
+          type: integer
+        active_group_name:
+          type: string
+        active_group_max_treatments:
+          type: integer
+          nullable: true
+        active_group_max_treatments_period:
+          type: integer
+          nullable: true
+        active_group_app_interval:
+          type: integer
+          nullable: true
+
+    ArthropodBuffer:
+      type: object
+      properties:
+        client_crop_id:
+          type: integer
+        arthropod_crop_qualifier:
+          type: string
+        buffer_width:
+          type: integer
+
+    AquaticBuffer:
+      type: object
+      properties:
+        client_crop_id:
+          type: integer
+        aquatic_crop_qualifier:
+          type: string
+        hbs_buffer_width:
+          type: integer
+        baas_buffer_width:
+          type: integer
+        handheld_buffer_width:
+          type: integer
