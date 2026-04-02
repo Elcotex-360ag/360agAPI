@@ -94,22 +94,22 @@ paths:
                       $ref: '#/components/schemas/DetailedProduct'
               example:
                                
-                  - MAPP_number: "12629",
-                    Product_name: "Hallmark with Zeon Technology",
-                    extent_of_authorisation: "UK",
-                    marketing_company: "Syngenta UK Limited",
-                    formulation: "Capsule suspension",
-                    "product_application_units": "l/ha",
-                    first_issue_date: "2024-01-15",
-                    expiry_date: "2030-12-31",
-                    final_sale_distribution: "2031-06-30",
-                    final_use: "2032-06-30",
-                    field_of_use: "Insecticide",
-                    LERAP_eligible: false,
-                    low_drift_nozzle: "3*",
-                    operator_protection_statements: "(1) Engineering control of operator exposure must be used where reasonably practicable in addition to the following personal protective equipment:\nOperators must wear suitable protective gloves when handling the product or handling contaminated surfaces.",
-                    environmental_protection_statements: "(1) Horizontal boom sprayers must be fitted with three star drift reduction technology for all uses.",
-                    specific_restriction_statements: "(1) This product must not be applied via hand-held equipment.\n(2) Buffer zones greater than 5m are NOT eligible for buffer zone reduction under the LERAP scheme.\n",
+                  - MAPP_number: "12629"
+                    Product_name: "Hallmark with Zeon Technology"
+                    extent_of_authorisation: "UK"
+                    marketing_company: "Syngenta UK Limited"
+                    formulation: "Capsule suspension"
+                    "product_application_units": "l/ha"
+                    first_issue_date: "2024-01-15"
+                    expiry_date: "2030-12-31"
+                    final_sale_distribution: "2031-06-30"
+                    final_use: "2032-06-30"
+                    field_of_use: "Insecticide"
+                    LERAP_eligible: false
+                    low_drift_nozzle: "3*"
+                    operator_protection_statements: "(1) Engineering control of operator exposure must be used where reasonably practicable in addition to the following personal protective equipment:\nOperators must wear suitable protective gloves when handling the product or handling contaminated surfaces."
+                    environmental_protection_statements: "(1) Horizontal boom sprayers must be fitted with three star drift reduction technology for all uses."
+                    specific_restriction_statements: "(1) This product must not be applied via hand-held equipment.\n(2) Buffer zones greater than 5m are NOT eligible for buffer zone reduction under the LERAP scheme.\n"
                     product_application_units: "L/ha"
                     crop_qualifier_restrictions:
                       - client_crop_id: 42
@@ -125,7 +125,7 @@ paths:
                         product_min_water_rate_l-ha: 200
                         product_exclusive_timed_restrictions: false
                         target_organisms: 
-                          -"Beet Western Yellow Virus (Aphid Vectors)",
+                          -"Beet Western Yellow Virus (Aphid Vectors)"
                           -"Botrytis"
                         product_timed_restriction_details:
                           - product_earliest_date: null
