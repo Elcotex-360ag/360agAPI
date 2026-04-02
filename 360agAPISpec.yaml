@@ -124,10 +124,9 @@ paths:
                         product_max_concentration_percent: 1.0
                         product_min_water_rate_l-ha: 200
                         product_exclusive_timed_restrictions: false
-                        "target_organisms": [
-                        "Beet Western Yellow Virus (Aphid Vectors)",
-                        "Botrytis"
-                        ],
+                        target_organisms: 
+                          -"Beet Western Yellow Virus (Aphid Vectors)",
+                          -"Botrytis"
                         product_timed_restriction_details:
                           - product_earliest_date: null
                             product_earliest_growth_stage: "GS31"
