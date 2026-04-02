@@ -93,40 +93,34 @@ paths:
                     items:
                       $ref: '#/components/schemas/DetailedProduct'
               example:
-                               
-                  - MAPP_number: "12629"
-                    Product_name: "Hallmark with Zeon Technology"
-                    extent_of_authorisation: "UK"
-                    marketing_company: "Syngenta UK Limited"
-                    formulation: "Capsule suspension"
-                    "product_application_units": "l/ha"
+                data:
+                  - MAPP_number: "19234"
+                    Product_name: "AgriGuard Pro"
+                    extent_of_authorisation: "Great Britain"
+                    marketing_company: "CropTech Solutions"
+                    formulation: "Suspension Concentrate"
                     first_issue_date: "2024-01-15"
                     expiry_date: "2030-12-31"
                     final_sale_distribution: "2031-06-30"
                     final_use: "2032-06-30"
-                    field_of_use: "Insecticide"
-                    LERAP_eligible: false
-                    low_drift_nozzle: "3*"
-                    operator_protection_statements: "(1) Engineering control of operator exposure must be used where reasonably practicable in addition to the following personal protective equipment:\nOperators must wear suitable protective gloves when handling the product or handling contaminated surfaces."
-                    environmental_protection_statements: "(1) Horizontal boom sprayers must be fitted with three star drift reduction technology for all uses."
-                    specific_restriction_statements: "(1) This product must not be applied via hand-held equipment.\n(2) Buffer zones greater than 5m are NOT eligible for buffer zone reduction under the LERAP scheme.\n"
+                    field_of_use: "Agriculture"
                     product_application_units: "L/ha"
                     crop_qualifier_restrictions:
                       - client_crop_id: 42
-                        product_crop_qualifier: "Outdoor"
+                        product_crop_qualifier: "Winter Wheat"
                         eamu_number: "20210145"
                         product_max_total_dose: 2.0
-                        product_max_total_dose_period: 365
+                        product_max_total_dose_period: null
                         product_max_treatments: 2
                         product_max_treatments_period: null
                         product_app_interval: 14
                         product_harvest_interval: 35
-                        product_max_concentration_percent: 1.0
-                        product_min_water_rate_l-ha: 200
+                        product_max_concentration_percent: null
+                        'product_min_water_rate_l-ha': 200
                         product_exclusive_timed_restrictions: false
-                        target_organisms: 
-                          -"Beet Western Yellow Virus (Aphid Vectors)"
-                          -"Botrytis"
+                        target_organisms:
+                          - "Aphids"
+                          - "Whitefly"
                         product_timed_restriction_details:
                           - product_earliest_date: null
                             product_earliest_growth_stage: "GS31"
@@ -179,14 +173,19 @@ paths:
                         active_group_app_interval: 14
                     arthropod_buffer:
                       - client_crop_id: 42
-                        arthropod_crop_qualifier: null
+                        arthropod_crop_qualifier: "Winter Wheat"
                         buffer_width: 5
                     aquatic_buffer:
                       - client_crop_id: 42
-                        aquatic_crop_qualifier: null
+                        aquatic_crop_qualifier: "Winter Wheat"
                         hbs_buffer_width: 5
                         baas_buffer_width: 5
                         handheld_buffer_width: 1
+                    LERAP_eligible: true
+                    low_drift_nozzle: "3 Star"
+                    operator_protection_statements: "Wear suitable protective clothing."
+                    environmental_protection_statements: "Do not contaminate water."
+                    specific_restriction_statements: "Do not apply by hand-held equipment."
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
@@ -575,8 +574,6 @@ components:
         hbs_buffer_width:
           type: integer
         baas_buffer_width:
-          type: integer
-        handheld_buffer_width:
           type: integer
         handheld_buffer_width:
           type: integer
