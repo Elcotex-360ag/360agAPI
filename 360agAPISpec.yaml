@@ -207,18 +207,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "At least one crop_id and a date are required"
+            
     UnauthorizedError:
-      description: Unauthorized (Invalid or missing API key)
+      description: Invalid or inactive API key
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "Invalid or missing API key in headers"
+            
     InternalServerError:
       description: Internal Server Error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "An unexpected server error occurred"
 
   schemas:
     ErrorResponse:
@@ -226,7 +234,6 @@ components:
       properties:
         error:
           type: string
-          example: "At least one crop_id and a date are required"
 
     Crop:
       type: object
