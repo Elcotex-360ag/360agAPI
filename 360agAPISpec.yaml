@@ -217,7 +217,7 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
           example:
-            error: "Invalid or missing API key in headers"
+            error: "Invalid or inactive API key"
             
     InternalServerError:
       description: Internal Server Error
