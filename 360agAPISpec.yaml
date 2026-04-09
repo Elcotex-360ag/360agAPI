@@ -94,21 +94,21 @@ paths:
                       $ref: '#/components/schemas/DetailedProduct'
               example:
                 data:
-                  - MAPP_number: "19234"
-                    Product_name: "AgriGuard Pro"
-                    extent_of_authorisation: "Great Britain"
-                    marketing_company: "CropTech Solutions"
+                  - mapp_number: "18324"
+                    product_name: "Affix"
+                    extent_of_authorisation: "UK"
+                    marketing_company: "UPL Europe Ltd"
                     formulation: "Suspension Concentrate"
-                    first_issue_date: "2024-01-15"
-                    expiry_date: "2030-12-31"
-                    final_sale_distribution: "2031-06-30"
-                    final_use: "2032-06-30"
-                    field_of_use: "Agriculture"
-                    product_application_units: "L/ha"
+                    first_issue_date: "2019-06-18"
+                    expiry_date: "2025-12-31"
+                    final_use: "2027-06-30"
+                    final_sale_distributor: "2026-06-30"
+                    field_of_use: "FUNGICIDE"
+                    product_application_units: "l/ha"
                     crop_qualifier_restrictions:
-                      - client_crop_id: 42
-                        product_crop_qualifier: "Winter Wheat"
-                        eamu_number: "20210145"
+                      - client_crop_id: 16
+                        product_crop_qualifier: "Wheat, Winter"
+                        eamu_number: null
                         product_max_total_dose: 2.0
                         product_max_total_dose_period: null
                         product_max_treatments: 2
@@ -132,11 +132,11 @@ paths:
                     adjuvant_crop_restrictions:
                       - client_crop_id: 42
                         restrictions:
-                          - product_crop_qualifier: "Winter Wheat"
-                            ppp_descriptor: "Tank Mix Partner A"
-                            ppp_name_mapp: "Partner MAPP 98765"
-                            ppp_adjuvant_rec: "Use with approved adjuvant"
-                            max_ppp_rate: 1.5
+                          - product_crop_qualifier: "Cereals"
+                            ppp_descriptor: "All Plant Protection Products at half or less than half the approved rate"
+                            ppp_name_mapp: "Affix (MAPP 18324)"
+                            ppp_adjuvant_rec: "All plant protection products that recommend the use of bloggo"
+                            max_ppp_rate: 50
                             product_max_concentration_percent: null
                             product_max_treatments: 1
                             product_max_treatments_period: null
@@ -145,14 +145,14 @@ paths:
                             product_latest_application: "GS59"
                             product_latest_application_inherited: false
                             product_harvest_interval: 35
-                            ppp_active: "Adjuvant Active X"
+                            ppp_active: "Azoxystrobin"
                     product_active:
                       - active_name: "Azoxystrobin"
                         active_quantity: 250
                         active_quantity_units: "g/L"
                         active_crop_qualifier_restrictions:
                           - client_crop_id: 42
-                            active_crop_qualifier: "Winter Wheat"
+                            active_crop_qualifier: "Wheat, Winter"
                             active_max_total_dose: 500
                             active_max_total_dose_period: null
                             active_max_treatments: 2
@@ -173,19 +173,19 @@ paths:
                         active_group_app_interval: 14
                     arthropod_buffer:
                       - client_crop_id: 42
-                        arthropod_crop_qualifier: "Winter Wheat"
+                        arthropod_crop_qualifier: "Wheat"
                         buffer_width: 5
                     aquatic_buffer:
                       - client_crop_id: 42
-                        aquatic_crop_qualifier: "Winter Wheat"
+                        aquatic_crop_qualifier: "Wheat, Winter"
                         hbs_buffer_width: 5
                         baas_buffer_width: 5
                         handheld_buffer_width: 1
                     LERAP_eligible: true
-                    low_drift_nozzle: "3 Star"
-                    operator_protection_statements: "Wear suitable protective clothing."
-                    environmental_protection_statements: "Do not contaminate water."
-                    specific_restriction_statements: "Do not apply by hand-held equipment."
+                    low_drift_nozzle: "3*"
+                    operator_protection_statements: "(1) Engineering control of operator exposure must be used where reasonably practicable in addition to the following personal protective equipment:"
+                    environmental_protection_statements: "(1) Crops/situations with 5m buffer zone:\nSince there is a risk to aquatic life from use, users not applying the statutory buffer zone must either themselves carry out or ensure that someone else has carried out a Local Environment Risk Assessment for Pesticides (LERAP) on their behalf before each spraying operation from a horizontal boom sprayer."
+                    specific_restriction_statements: "(1) To reduce the risk of resistance developing on target diseases the total number of applications of products containing Qol fungicides made to any cereal crop must not exceed two."
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
