@@ -153,6 +153,7 @@ paths:
                         active_crop_qualifier_restrictions:
                           - client_crop_id: 42
                             active_crop_qualifier: "Wheat, Winter"
+                            active_application_units: "g/ha"
                             active_max_total_dose: 500
                             active_max_total_dose_period: null
                             active_max_treatments: 2
