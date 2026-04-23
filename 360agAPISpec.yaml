@@ -11,6 +11,44 @@ security:
   - ApiKeyAuth: []
 
 paths:
+  /growth_stages:
+    get:
+      summary: Retrieve growth stages
+      description: Returns a reference table of Growth Stage Systems and associated Growth Stages.
+      operationId: getGrowthStages
+      responses:
+        '200':
+          description: Successful response containing growth stages.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GrowthStage'
+              example:
+                data:
+                  - system_id: 2
+                    system_name: "BBCH - Beet"
+                    growth_stage_id: 1
+                    growth_stage_number: -1
+                    description: "Pre-Planting"
+                  - system_id: 2
+                    system_name: "BBCH - Beet"
+                    growth_stage_id: 2
+                    growth_stage_number: 0
+                    description: "At Planting"
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   /get_crops:
     get:
       summary: Retrieve available crops
@@ -22,9 +60,20 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Crop'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Crop'
+              example:
+                data:
+                  - crop_id: 18
+                    client_crop_name: "Barley, Spring"
+                    growth_stage_system_id: 5
+                  - crop_id: 19
+                    client_crop_name: "Barley, Winter"
+                    growth_stage_system_id: 5
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '500':
@@ -124,8 +173,10 @@ paths:
                         product_timed_restriction_details:
                           - product_earliest_date: null
                             product_earliest_growth_stage: "GS31"
+                            product_earliest_growth_stage_standard_id: 5
                             product_latest_date: null
                             product_latest_growth_stage: "GS59"
+                            product_latest_growth_stage_standard_id: 5
                             product_timed_max_application_rate: 1.0
                             product_timed_max_total_dose: 2.0
                             product_timed_max_treatments: 2
@@ -219,6 +270,15 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           example:
             error: "Invalid or inactive API key"
+
+    MethodNotAllowedError:
+      description: Method Not Allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: "GET or POST required"
             
     InternalServerError:
       description: Internal Server Error
@@ -241,10 +301,32 @@ components:
       properties:
         crop_id:
           type: integer
-          example: 42
+          example: 18
         client_crop_name:
           type: string
-          example: "Winter Wheat"
+          example: "Barley, Spring"
+        growth_stage_system_id:
+          type: integer
+          example: 5
+
+    GrowthStage:
+      type: object
+      properties:
+        system_id:
+          type: integer
+          example: 2
+        system_name:
+          type: string
+          example: "BBCH - Beet"
+        growth_stage_id:
+          type: integer
+          example: 1
+        growth_stage_number:
+          type: integer
+          example: -1
+        description:
+          type: string
+          example: "Pre-Planting"
 
     ProductRequestPayload:
       type: object
@@ -291,9 +373,9 @@ components:
     DetailedProduct:
       type: object
       properties:
-        MAPP_number:
+        mapp_number:
           type: string
-        Product_name:
+        product_name:
           type: string
         extent_of_authorisation:
           type: string
@@ -307,7 +389,7 @@ components:
         expiry_date:
           type: string
           nullable: true
-        final_sale_distribution:
+        final_sale_distributor:
           type: string
           nullable: true
         final_use:
@@ -413,11 +495,17 @@ components:
         product_earliest_growth_stage:
           type: string
           nullable: true
+        product_earliest_growth_stage_standard_id:
+          type: integer
+          nullable: true
         product_latest_date:
           type: string
           nullable: true
         product_latest_growth_stage:
           type: string
+          nullable: true
+        product_latest_growth_stage_standard_id:
+          type: integer
           nullable: true
         product_timed_max_application_rate:
           type: number
@@ -503,6 +591,9 @@ components:
           type: integer
         active_crop_qualifier:
           type: string
+        active_application_units:
+          type: string
+          nullable: true
         active_max_total_dose:
           type: number
           nullable: true
