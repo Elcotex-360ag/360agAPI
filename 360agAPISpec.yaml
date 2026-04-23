@@ -215,8 +215,14 @@ paths:
                             'active_min_water_rate_l-ha': 200
                             active_timed_restriction_details:
                               - active_earliest_date: null
+                                active_earliest_growth_stage: "GS31"
+                                active_earliest_growth_stage_standard_id: 5
                                 active_latest_date: null
+                                active_latest_growth_stage: "GS59"
+                                active_latest_growth_stage_standard_id: 5
                                 active_timed_max_application_rate: 250
+                                active_timed_max_total_dose: 500
+                                active_timed_max_treatments: 2
                     active_group:
                       - client_crop_id: 42
                         active_group_name: "QoI Fungicides"
@@ -629,11 +635,29 @@ components:
         active_earliest_date:
           type: string
           nullable: true
+        active_earliest_growth_stage:
+          type: string
+          nullable: true
+        active_earliest_growth_stage_standard_id:
+          type: integer
+          nullable: true
         active_latest_date:
           type: string
           nullable: true
+        active_latest_growth_stage:
+          type: string
+          nullable: true
+        active_latest_growth_stage_standard_id:
+          type: integer
+          nullable: true
         active_timed_max_application_rate:
           type: number
+          nullable: true
+        active_timed_max_total_dose:
+          type: number
+          nullable: true
+        active_timed_max_treatments:
+          type: integer
           nullable: true
 
     ActiveGroupRestriction:
