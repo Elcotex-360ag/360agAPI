@@ -164,6 +164,9 @@ paths:
                         product_max_treatments_period: null
                         product_app_interval: 14
                         product_harvest_interval: 35
+                        product_grazing_interval: 1
+                        product_forage_interval: 4
+                        product_planting_interval: 28
                         product_max_concentration_percent: null
                         'product_min_water_rate_l-ha': 200
                         product_exclusive_timed_restrictions: false
@@ -472,6 +475,15 @@ components:
           type: integer
           nullable: true
         product_harvest_interval:
+          type: integer
+          nullable: true
+        product_grazing_interval:
+          type: integer
+          nullable: true
+        product_forage_interval:
+          type: integer
+          nullable: true
+        product_planting_interval:
           type: integer
           nullable: true
         product_max_concentration_percent:
