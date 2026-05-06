@@ -174,10 +174,12 @@ paths:
                           - "Aphids"
                           - "Whitefly"
                         product_timed_restriction_details:
-                          - product_earliest_date: null
+                            product_earliest_date: "01-OCT"
+                            product_earliest_date_year: -1
                             product_earliest_growth_stage: "GS31"
                             product_earliest_growth_stage_standard_id: 5
-                            product_latest_date: null
+                            product_latest_date: "28-FEB"
+                            product_latest_date_year: 0
                             product_latest_growth_stage: "GS59"
                             product_latest_growth_stage_standard_id: 5
                             product_timed_max_application_rate: 1.0
@@ -217,10 +219,12 @@ paths:
                             active_max_concentration_percent: null
                             'active_min_water_rate_l-ha': 200
                             active_timed_restriction_details:
-                              - active_earliest_date: null
+                                active_earliest_date: "31-JAN"
+                                active_earliest_date_year: 0
                                 active_earliest_growth_stage: "GS31"
                                 active_earliest_growth_stage_standard_id: 5
-                                active_latest_date: null
+                                active_latest_date: "15-MAY"
+                                active_latest_date_year: 0
                                 active_latest_growth_stage: "GS59"
                                 active_latest_growth_stage_standard_id: 5
                                 active_timed_max_application_rate: 250
@@ -510,6 +514,9 @@ components:
         product_earliest_date:
           type: string
           nullable: true
+        product_earliest_date_year:
+          type: integer
+          nullable: true
         product_earliest_growth_stage:
           type: string
           nullable: true
@@ -518,6 +525,9 @@ components:
           nullable: true
         product_latest_date:
           type: string
+          nullable: true
+        product_latest_date_year:
+          type: integer
           nullable: true
         product_latest_growth_stage:
           type: string
@@ -647,6 +657,9 @@ components:
         active_earliest_date:
           type: string
           nullable: true
+        active_earliest_date_year:
+          type: integer
+          nullable: true
         active_earliest_growth_stage:
           type: string
           nullable: true
@@ -655,6 +668,9 @@ components:
           nullable: true
         active_latest_date:
           type: string
+          nullable: true
+        active_latest_date_year:
+          type: integer
           nullable: true
         active_latest_growth_stage:
           type: string
