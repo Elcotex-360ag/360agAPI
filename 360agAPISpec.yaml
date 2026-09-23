@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: 360ag CP Authorisations API
-  version: 1.0.0
+  version: 1.1.0
   description: API for retrieving crop protection and adjuvant authorisations, restrictions, and mapping data.
 servers:
   - url: https://api.360ag.io/functions/v1
@@ -147,12 +147,14 @@ paths:
                     product_name: "Affix"
                     extent_of_authorisation: "UK"
                     marketing_company: "UPL Europe Ltd"
-                    formulation: "Suspension Concentrate"
+                    formulation: "Suspension concentrate"
                     first_issue_date: "2019-06-18"
                     expiry_date: "2025-12-31"
                     final_use: "2027-06-30"
                     final_sale_distributor: "2026-06-30"
-                    field_of_use: "FUNGICIDE"
+                    field_of_use: "Fungicide"
+                    field_of_use_list:
+                      - "Fungicide"
                     product_application_units: "l/ha"
                     crop_qualifier_restrictions:
                       - client_crop_id: 16
@@ -410,6 +412,15 @@ components:
           nullable: true
         field_of_use:
           type: string
+          nullable: true
+          description: The product's field(s) of use as a single string. A product can have more than one (for example a fungicide that is also a plant growth regulator), in which case the values are joined with "; ". Null when the product has no field of use recorded. Prefer field_of_use_list for new integrations.
+          example: "Fungicide; Plant growth regulator"
+        field_of_use_list:
+          type: array
+          description: The product's field(s) of use, one entry per value. Empty when the product has no field of use recorded.
+          items:
+            type: string
+          example: ["Fungicide", "Plant growth regulator"]
         product_application_units:
           type: string
           nullable: true
